@@ -1,0 +1,14 @@
+<div [ngClass]="'p' +progress" class="progress-circle big" [style.font-size.px]='size' [style.background-color]='trackColour'>
+    <small [ngClass]="label? 'show': 'hide'" [style.color]='labelColour'>{{label | async | uppercase}}</small>
+    <span class="span-progress" *ngIf='!customValue'>{{progress}}%</span>
+    <span class="span-progress" *ngIf='customValue'>{{customValue}}</span>
+    <div class="bar-tmp" *ngIf="showArrow">
+      <i class="shape"><i [ngStyle]="{'border-left': stylExp}"></i></i>
+    </div>
+    <div class="slice"> 
+      <div [style.border-color]='fillColour' class="bar"></div>
+      <div [style.border-color]='fillColour' class="fill"></div>
+    </div>
+  </div> 
+   
+  

@@ -1,0 +1,118 @@
+<div class="container">
+  <div class="align-center">
+    <!-- highlightMe is an example for directive-->
+    <h1 highlightMe>
+      Welcome to {{ title }}!
+    </h1>
+  </div>
+  <div class="wrapper">
+    <section>
+      <h3>Example for HttpClient Get</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- SlicePipe: Creates a new Array or String containing a subset (slice) of the elements.-->
+          <tr *ngFor="let item of employeeList | slice:0:5">
+            <td>{{item.id}}</td>
+            <td>{{item.title}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>Example for Template driven Form</h3>
+      <form #myForm="ngForm" (ngSubmit)="onSubmitTemplateBased(myForm)">
+        <label>First Name:</label>
+        <input type="text" name="fname" ngModel>
+        <label>Password:</label>
+        <input type="password" name="password" ngModel>
+        <br>
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+
+    <section>
+      <h3>Example for Reactive Form</h3>
+      <form [formGroup]="reactiveForm" (ngSubmit)="onSubmitReactiveBased()" novalidate>
+        <!-- novalidate attribute is used to disable browser's native form validation -->
+        <div class="form-fld">
+          <label>First Name:</label>
+          <input type="text" formControlName="firstName" autocomplete="new-name">
+          <div *ngIf="(submitted || f.firstName.touched) && f.firstName.errors" class="error">
+            <span *ngIf="f.firstName.errors.required">First name is required</span>
+            <span *ngIf="f.firstName.errors?.pattern">Numbers not allowed</span>
+          </div>
+        </div>
+        <div class="form-fld">
+          <label>Last Name:</label>
+          <input type="text" formControlName="lastName" autocomplete="new-name">
+          <div *ngIf="(submitted || f.lastName.touched) && f.lastName.errors" class="error">
+            <span *ngIf="f.lastName.errors.required">Last Name is required</span>
+            <span *ngIf="f.lastName.errors?.pattern">Numbers not allowed</span>
+          </div>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+
+    <section>
+      <h3>Sharing data between components : Method 1 any to any using Behaviour Subject</h3>
+      <h5>Data : {{user}}</h5>
+      <input [(ngModel)]="newUser">
+      <button class="mleft-10" (click)="editedUser()">Change user name</button>
+    </section>
+
+    <section> 
+      <div class="table-section">
+        <h3>Rendering Data from local storage</h3>
+        <div class="no-data" *ngIf="localStorageReactiveFormData?.length<=0">
+          Local storage data not available!<br> submit new data from reactive form and do refresh!
+        </div>
+        <table class="table" *ngIf="localStorageReactiveFormData?.length>0">
+          <thead>
+            <th>First name</th>
+            <th>Last name</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of localStorageReactiveFormData; let i = index;">
+              <td>{{item.firstName}}</td>
+              <td>{{item.lastName}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section>
+      <div class="table-section">
+        <h3>Rendering Data from static json file</h3>
+        <table class="table">
+          <thead>
+            <th>First name</th>
+            <th>Last name</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of staticJsonData; let i = index;">
+              <td>{{item.firstName}}</td>
+              <td>{{item.lastName}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- custom widgets -->
+    <section>
+      <h3>Circular progress bar</h3>
+      <progress-bar-circle [size]="'240'" [value]="100" [label]="daysLeft"[labelColour]="'#b88d97'" [trackColour]="'#ebebe8'" [fillColour]="'#ea4a72'" [showArrow]=true>
+      </progress-bar-circle>
+    </section>
+
+  </div>
+</div>
+<router-outlet></router-outlet>
